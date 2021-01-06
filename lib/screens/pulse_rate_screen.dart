@@ -13,15 +13,28 @@ class PulseRate extends StatefulWidget {
 
 class _PulseRateState extends State<PulseRate>
     with SingleTickerProviderStateMixin {
+  //make instance of assetsAudioPlayer to play and stop audio
   final assetsAudioPlayer = AssetsAudioPlayer.withId("0");
+
+  //using as a flag to determine on or off
   bool _toggled = false;
+
+  //controller to control animation
   AnimationController controller;
 
+//timer for update data and chart
   Timer _timer;
+
+  //object of GetData class to access class fields and methods
   GetData getData = GetData();
+
+  //by using index can move and monitor data in data list
   int index = 0;
+
+  //list of doubles contain all position that will be draw
   List<double> ppgwave = List();
 
+  //this method to run audio animation and starting draw chart
   _toggle() {
     _timer = Timer.periodic(Duration(milliseconds: 400), _generateTrace);
 
@@ -33,10 +46,12 @@ class _PulseRateState extends State<PulseRate>
     getData.read_data();
     controller.forward();
     setState(() {
+      //it is mean it is now on
       _toggled = true;
     });
   }
 
+// to stop drawing, animation data update and audio
   _untoggle() {
     setState(() {
       _toggled = false;
@@ -48,10 +63,11 @@ class _PulseRateState extends State<PulseRate>
     _timer.cancel();
   }
 
+// this method triger periodically to update chart and data from the list to
+// text widget
   _generateTrace(Timer t) {
     setState(() {
       ppgwave.addAll(traceSine);
-
       if (index > 299) {
         index = 0;
       }
@@ -59,11 +75,11 @@ class _PulseRateState extends State<PulseRate>
     });
   }
 
+//called before build method to initalize controller and start read data
   @override
   void initState() {
     super.initState();
     getData.read_data();
-
     controller = AnimationController(
       duration: Duration(milliseconds: 750),
       vsync: this,
@@ -81,6 +97,7 @@ class _PulseRateState extends State<PulseRate>
     controller.forward();
   }
 
+  //when dispose release resources
   @override
   void dispose() {
     _timer.cancel();
@@ -89,6 +106,7 @@ class _PulseRateState extends State<PulseRate>
 
   @override
   Widget build(BuildContext context) {
+    //specifies draw chart properites
     Oscilloscope scopeOne = Oscilloscope(
       showYAxis: true,
       yAxisColor: Colors.white,

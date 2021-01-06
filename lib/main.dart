@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import pulse_rate_screen that the UI
 import 'screens/pulse_rate_screen.dart';
 
 void main() {
@@ -10,11 +11,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'PPG',
+      title: 'Ixir Task',
       theme: ThemeData(
         brightness: Brightness.light,
       ),
-      home: PulseRate(),
+      home: PulseRate(), //our page
     );
   }
 }

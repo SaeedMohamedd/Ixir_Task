@@ -1,3 +1,6 @@
+// to drow spicific signal need list of position that will be draw
+// this list is the basic component of the required signal (pulse signal)
+
 const List<double> traceSine = [
   0.1,
   0.1,
